@@ -1,5 +1,8 @@
 package com.ferdyJmartDR.jmart_android.request;
-
+/**
+ * @author Mochamad Ferdy Fauzan
+ * @version 05-12-2021
+ */
 import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import java.util.*;

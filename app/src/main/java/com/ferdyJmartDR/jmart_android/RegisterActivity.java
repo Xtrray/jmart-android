@@ -1,53 +1,94 @@
 package com.ferdyJmartDR.jmart_android;
+/**
+ * @author Mochamad Ferdy Fauzan
+ * @version 05-12-2021
+ */
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.ferdyJmartDR.jmart_android.request.RegisterRequest;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+
+import com.ferdyJmartDR.jmart_android.request.LoginRequest;
+import com.ferdyJmartDR.jmart_android.request.RegisterRequest;
+
 public class RegisterActivity extends AppCompatActivity {
+    private TextView tv_loginHere;
+    private EditText etEmail;
+    private EditText etName;
+    private EditText etPassword;
+    private Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        TextView nameRegister = findViewById(R.id.nameRegister);
-        TextView emailRegister = findViewById(R.id.emailRegister);
-        TextView passwordText = findViewById(R.id.passwordText);
-        Button registerButton = findViewById(R.id.registerButton);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etName = findViewById(R.id.etName);
+        btnRegister = findViewById(R.id.btnRegister);
 
-        registerButton.setOnClickListener(v -> {
-            Response.Listener<String> listener = response -> {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if(jsonObject != null) {
-                        Toast.makeText(RegisterActivity.this, "Register successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                String name = etName.getText().toString();
+                RegisterRequest registerRequest = new RegisterRequest(name, email, password, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            if (jsonObj != null){
+                                Toast.makeText(getApplicationContext(), "Register successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(), "Register unsuccessful, jsonObj null", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Register unsuccessful, error occured", Toast.LENGTH_LONG).show();
+                        }
                     }
-                } catch (JSONException err){
-                    Toast.makeText(RegisterActivity.this, err.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            };
-            Response.ErrorListener errorListener = response -> {
-                Toast.makeText(RegisterActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-            };
-            String name = nameRegister.getText().toString();
-            String email = emailRegister.getText().toString();
-            String password = passwordText.getText().toString();
-            RegisterRequest registerRequest = new RegisterRequest(name, email, password, listener, errorListener);
-            RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-            requestQueue.add(registerRequest);
-
+                }, new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Register unsuccessful, error occured", Toast.LENGTH_LONG).show();
+                    }
+                });
+                queue.add(registerRequest);
+            }
         });
+
+        tv_loginHere = (TextView) findViewById(R.id.tv_loginHere);
+        tv_loginHere.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openLoginActivity();
+            }
+        });
+    }
+
+
+    public void openLoginActivity(){
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }
