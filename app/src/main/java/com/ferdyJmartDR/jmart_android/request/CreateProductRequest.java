@@ -13,7 +13,6 @@ import java.util.Map;
 
 import com.ferdyJmartDR.jmart_android.model.ProductCategory;
 
-//Class for creating new product Requests
 public class CreateProductRequest extends StringRequest {
     private Map<String, String> params;
 

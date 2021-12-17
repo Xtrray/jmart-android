@@ -1,7 +1,7 @@
 package com.ferdyJmartDR.jmart_android;
 /**
  * @author Mochamad Ferdy Fauzan
- * @version 05-12-2021
+ * @version 17-12-2021
  */
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,20 +34,14 @@ import com.ferdyJmartDR.jmart_android.request.RegisterRequest;
 import com.ferdyJmartDR.jmart_android.request.RegisterStoreRequest;
 
 public class AboutMeActivity extends AppCompatActivity {
-    private TextView tv_userName;
-    private TextView tv_userEmail;
-    private TextView tv_userBalance;
-    private Button btnTopUp;
-    private Button btnRegisterStore;
+    private TextView tv_userName, tv_userEmail, tv_userBalance;
+    private Button btnTopUp, btnRegisterStore, btnInvoiceHistory;
     private EditText et_topUpAmount;
     private CardView cv_storeExists;
 
     private CardView cv_registerStore;
-    private EditText et_storeName;
-    private EditText et_storeAddress;
-    private EditText et_storePhoneNumber;
-    private Button btnRegisterStoreCancel;
-    private Button btnRegisterStoreConfirm;
+    private EditText et_storeName, et_storeAddress, et_storePhoneNumber;
+    private Button btnRegisterStoreCancel, btnRegisterStoreConfirm;
 
     private TextView tv_storeNameF;
     private TextView tv_storeAddressF;
@@ -66,6 +60,15 @@ public class AboutMeActivity extends AppCompatActivity {
         tv_userName.setText(LoginActivity.getLoggedAccount().name);
         tv_userEmail.setText(LoginActivity.getLoggedAccount().email);
         tv_userBalance.setText(String.valueOf(LoginActivity.getLoggedAccount().balance));
+
+        btnInvoiceHistory = findViewById(R.id.btnInvoiceHistory);
+        btnInvoiceHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), InvoiceHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnTopUp = findViewById(R.id.btnTopUp);
         btnTopUp.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +117,7 @@ public class AboutMeActivity extends AppCompatActivity {
         if(LoginActivity.getLoggedAccount().store != null){
             btnRegisterStore.setVisibility(View.GONE);
             cv_storeExists.setVisibility(View.VISIBLE);
-            //Show the existing store
+
             tv_storeNameF = findViewById(R.id.tv_storeNameF);
             tv_storeAddressF = findViewById(R.id.tv_storeAddressF);
             tv_storePhoneNumberF = findViewById(R.id.tv_storePhoneNumberF);
@@ -165,10 +168,5 @@ public class AboutMeActivity extends AppCompatActivity {
                 queue.add(registerStoreRequest);
             }
         });
-    }
-    @Override
-    public boolean onSupportNavigateUp(){
-        finish();
-        return true;
     }
 }

@@ -1,7 +1,7 @@
 package com.ferdyJmartDR.jmart_android;
 /**
  * @author Mochamad Ferdy Fauzan
- * @version 05-12-2021
+ * @version 17-12-2021
  */
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
-
+    //Method to get the currently logged account
     public static Account getLoggedAccount(){
         return loggedAccount;
     }
@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity{
         btnLogin = findViewById(R.id.btnLogin);
         tv_registerNow = findViewById(R.id.tv_registerNow);
 
-        etEmail.setText("xtrray@gmail.com");
-        etPassword.setText("Sigu5195");
+        etEmail.setText("ferdy@ui.ac.id");
+        etPassword.setText("Pass1234");
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
