@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         try {
                             loggedAccount = gson.fromJson(response, Account.class);
+                            if(loggedAccount == null) throw new Exception();
                             Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
