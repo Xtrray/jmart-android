@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity{
         btnLogin = findViewById(R.id.btnLogin);
         tv_registerNow = findViewById(R.id.tv_registerNow);
 
-        etEmail.setText("ferdy@ui.ac.id");
-        etPassword.setText("Pass1234");
+        etEmail.setText("email1@gmail.com");
+        etPassword.setText("Password1");
 
         RequestQueue queue = Volley.newRequestQueue(this);
 

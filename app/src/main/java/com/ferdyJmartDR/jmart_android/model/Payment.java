@@ -18,8 +18,8 @@ public class Payment extends Invoice{
         public Status status;
         public Record(Status status, String message){
             date = new Date();
-            status = status;
-            message = message;
+            status = this.status;
+            message = this.message;
         }
     }
     public Payment(int buyerId, int productId, int productCount, Shipment shipment){

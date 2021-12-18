@@ -1,5 +1,6 @@
 package com.ferdyJmartDR.jmart_android.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ public abstract class Invoice extends Serializable{
     public int buyerId;
     public int complaintId;
     public final Date date;
-    //    public ArrayList<Record> history = new ArrayList<>();
+    //   public ArrayList<Record> history = new ArrayList<>();
     public int productId;
     public Rating rating;
     public enum Status{
